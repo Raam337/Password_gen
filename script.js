@@ -96,26 +96,33 @@ function getPasswordOptions() {
     if(len < 8 || len > 128){alert("Invalid length")}
   } while (len < 8 || len > 128);
   
-  var char_types = [];
-
-  confirm("Use lowercase characters?")? char_types.push(lowerCasedCharacters):null;
-  confirm("Use uppercase characters?")? char_types.push(upperCasedCharacters):null;
-  confirm("Use numeric symbols?")? char_types.push(numericCharacters):null;
-  confirm("Use special characters?")? char_types.push(specialCharacters):null;
+  do{
+    var char_types = [];
+    confirm("Use lowercase characters?")? char_types.push(lowerCasedCharacters):null;
+    confirm("Use uppercase characters?")? char_types.push(upperCasedCharacters):null;
+    confirm("Use numeric symbols?")? char_types.push(numericCharacters):null;
+    confirm("Use special characters?")? char_types.push(specialCharacters):null;
+    if(char_types.length === 0){alert("No character type selected. Select at least one")}
+  }while(char_types.length === 0);
 
   console.log(len,char_types);
+
   return len,char_types;
 }
 
 // Function for getting a random element from an array
 function getRandom(arr) {
-
+    return arr[_.random(arr.length-1)]
 }
 
 // Function to generate password with user input
 function generatePassword() {
-    getPasswordOptions();
+    [len,selection_array] = getPasswordOptions();
     var password = "a";
+    for (let i = 0; i < len; i++) {
+      console.log( getRandom(selection_array[_.random(selection_array.length-1)]));
+    }
+
     return password;
 }
 
