@@ -105,9 +105,8 @@ function getPasswordOptions() {
     if(char_types.length === 0){alert("No character type selected. Select at least one")}
   }while(char_types.length === 0);
 
-  console.log(len,char_types);
-
-  return len,char_types;
+  console.log(parseInt(len),char_types);
+  return [parseInt(len),char_types]
 }
 
 // Function for getting a random element from an array
@@ -115,14 +114,29 @@ function getRandom(arr) {
     return arr[_.random(arr.length-1)]
 }
 
+function checkPassword(pass,arr){
+    var pass_array = pass.split("");
+    for (let i = 0; i < arr.length; i++) {
+      if( (_.intersection(pass_array,arr[i])).length == 0 ){
+        console.log(pass +" "+ arr[i] + " No match");
+        return false;
+      }
+    }
+    return true;
+
+}
+
 // Function to generate password with user input
 function generatePassword() {
-    [len,selection_array] = getPasswordOptions();
-    var password = "a";
-    for (let i = 0; i < len; i++) {
-      console.log( getRandom(selection_array[_.random(selection_array.length-1)]));
-    }
+    var [len,selection_array] = getPasswordOptions();
+    var l = selection_array.length-1;
 
+    do{
+      var password = "";
+      for (let i = 0; i < len; i++) {
+        password += getRandom(  selection_array[_.random(l)]  );
+      }
+    } while(!checkPassword(password,selection_array));
     return password;
 }
 
